@@ -11,15 +11,15 @@
 	$servername="localhost";
 	$username="root";
 	$password="";
-	$db = "college";
+	$db = "newmaindb";
 	$conn =mysqli_connect($servername,$username,$password,$db);
 	if($conn)
 	{
-		
+
 		echo "Connected";
 	}
 	else
-	{	
+	{
 		echo "Error in DB".$conn.error();
 	}
 	/*
@@ -41,20 +41,20 @@
 	}
 
 */
-	$sql ="insert into Register
-			values('$uname','$roll','$sname','$fname','$mname','$mobile','$pass')";
+	$sql ="insert into parent
+			values('$uname','$pass','$roll','$fname','$mname')";
 
 
 
 	if(mysqli_query($conn,$sql)){
-		
-		echo "inserted successful";
+
+		echo "Inserted Successfully";
 	}
 	else
-		echo "Error in connection db".mysqli_error($conn);
+		echo "Error in connection".mysqli_error($conn);
 	mysqli_close($conn);
 
-	echo"<script>alert('Registered successfully');
+	echo"<script>alert('Registered Successfully');
 	window.location.href='index.html';
 	</script>";
-?>	
+?>

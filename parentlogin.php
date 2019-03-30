@@ -1,50 +1,46 @@
 <?php
-
-$user = 'root';
-$pass = '';
-$db = 'maindb';
-session_start(); // Starting Session
+ // Starting Session
+session_start();
 $error=''; // Variable To Store Error Message
-$connection = new mysqli('localhost', $user, $pass, $db) or die("Connection Error");
+$connection = mysqli_connect('localhost', 'root', '', 'newmaindb');
 
-if (isset($_POST['pass'])) {
 
-if (empty($_POST['uid']) || empty($_POST['pass'])) {
-echo "Please enter Username and Password";
+if (isset($_POST['username'])) {
+
+if (empty($_POST['username']) || empty($_POST['pass'])) {
+$error = "Username or Password is invalid";
 }
-else {
-
+else
+{
 // Define $username and $password
-$userid=$_POST['uid'];
-$password=$_POST['pass'];
+$username = $_POST['username'];
+$password = $_POST['pass'];
 
-// To protect MySQL injection for Security purpose
-$userid = stripslashes($voterid);
+$username = stripslashes($username);
 $password = stripslashes($password);
 
 // SQL query to fetch information of registerd users and finds user match.
-    $sql = "SELECT pass FROM  `parents` WHERE  uid='$userid'";
-    $query=mysqli_query($connection,$sql);
+    $sql = "SELECT PASSWORD FROM  `parent` WHERE username='$username'";
+    $query = mysqli_query($connection,$sql);
     $rows = mysqli_num_rows($query);
+
+    // Set session variables
+
 if ($rows == 1) {
+
+$_SESSION['username']=$username;
+
+$flag = 1;
  // Initializing Session
-$_SESSION['uid']=$voterid;
-
-  $flag=1;
-  echo "<script>alert('Login Successfull');
- window.location.href='bantai';
- </script>";
-
-} else {
- echo "<script>alert('Username and password are incorrect');
- window.location.href='bantai';
- </script>";
-
-exit();
+    echo "<script>alert('LOGIN SUCCESSFULLY');
+   window.location.href='voter1.php';</script>";
 }
+else {
+    echo "<script>alert(' LOGIN failed.');
+   window.location.href='index.html';</script>";
 
+}
 mysqli_close($connection); // Closing Connection
 }
 }
-
 ?>
