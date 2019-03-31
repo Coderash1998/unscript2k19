@@ -7,21 +7,25 @@
 	$mobile = $_GET['mobilenumber'];
 	$pass = $_GET['pass'];                                 //second approach
 
-	echo $uname.$roll.$sname.$fname.$mname.$mobile.$pass;
+	//echo $uname.$roll.$sname.$fname.$mname.$mobile.$pass;
 	$servername="localhost";
 	$username="root";
 	$password="";
-	$db = "newmaindb";
+	$db = "college";
 	$conn =mysqli_connect($servername,$username,$password,$db);
 	if($conn)
 	{
-
+		
 		echo "Connected";
 	}
 	else
-	{
+	{	
 		echo "Error in DB".$conn.error();
 	}
+	$res=openssl_pkey_new();
+	openssl_pkey_export($res, $privatekey);
+	$publickey=openssl_pkey_get_details($res)
+	$publickey=$publickey["key"];
 	/*
 	$sql = "CREATE OR REPLACE DATABASE College";
 	if($conn->query($sql)=== TRUE){
@@ -41,20 +45,20 @@
 	}
 
 */
-	$sql ="insert into parent
-			values('$uname','$pass','$roll','$fname','$mname')";
+	$sql ="insert into Register
+			values('$uname','$roll','$sname','$fname','$mname','$mobile','$pass')";
 
 
 
 	if(mysqli_query($conn,$sql)){
-
-		echo "Inserted Successfully";
+		
+		echo "inserted successful";
 	}
 	else
-		echo "Error in connection".mysqli_error($conn);
+		echo "Error in connection db".mysqli_error($conn);
 	mysqli_close($conn);
 
-	echo"<script>alert('Registered Successfully');
+	echo"<script>alert('Registered successfully');
 	window.location.href='index.html';
 	</script>";
-?>
+?>	
